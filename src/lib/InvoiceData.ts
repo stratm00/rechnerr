@@ -55,13 +55,13 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
             vat: "incl"
         }
     ],
-    discountGiven: -10000,
+    discountGiven: 0,
     dateDue: ""
 } 
 
 
 export type InvoiceDataSignal = {
-    kind: 'set_invoicee' | 'set_sender' | 'set_items' | 'set_date_given' | 'set_date_due' | 'set_scr' | 'set_discount',
+    kind: 'set_invoicee' | 'set_sender' | 'set_items' | 'set_date_given' | 'set_date_due' | 'set_scr' | 'set_discount' | 'switch_parties',
     paymentAddress?:PaymentAddress
     date?:string,
     scr?:string,
@@ -133,6 +133,13 @@ export function stateReducer(state:InvoiceData, signal:InvoiceDataSignal): Invoi
                 }
             }
             break;
+        }
+        //Testsignal
+        case "switch_parties": {
+            return {...state,
+                invoicee:state.sender,
+                sender:state.invoicee
+            }
         }
     }
     return state;
