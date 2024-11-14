@@ -1,6 +1,10 @@
 "use client";
 import { InvoiceStateContext } from "@/lib/InvoiceContext";
+<<<<<<< HEAD
 import { paymentNumbers, sumPayable } from "@/lib/InvoiceData";
+=======
+import { paymentNumbers } from "@/lib/InvoiceData";
+>>>>>>> 6d12abc (Refactored monetary listing)
 import { useContext } from "react"
 export default function ViewWidget(){
     const invoiceData = useContext(InvoiceStateContext);
@@ -26,7 +30,7 @@ export default function ViewWidget(){
 //     }
 // }
 
-function InvoiceAddressCard({type}:{type:"invoicee"|"sender"}) {
+function InvoiceAddressCard({type}:Readonly<{type:"invoicee"|"sender"}>) {
     const invoiceData = useContext(InvoiceStateContext);
     const addressObj = (type==="invoicee")? invoiceData.invoicee : invoiceData.sender;
     return <>
