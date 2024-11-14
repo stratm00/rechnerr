@@ -69,11 +69,19 @@ export type InvoiceDataSignal = {
     items?:Item[]
 }
 
-export function sumPayable(ivd:InvoiceData): number{
-    const discountedFromZero = (ivd.discountGiven===undefined)? 0: -ivd.discountGiven;
-    return ivd.items.reduce((sum, item)=> {
-        return sum + ((item.unitCost*item.units) * (item.vat=='incl' ? 1+(VAT_PCT) : 1))
-    }, discountedFromZero);
+type PaymentNumbers = {
+    subtotal:number,
+    taxes:number,
+    discount:number
+}
+export function paymentNumbers(ivd:InvoiceData): PaymentNumbers{
+    let paymentNums = {subtotal:0, taxes:0, total:0, discount:ivd.discountGiven ?? 0};
+    for (const it of ivd.items){
+        const itemSubtotal = it.unitCost*it.units;
+        paymentNums.subtotal+=itemSubtotal;
+        if(it.vat=="incl")paymentNums.taxes+= (VAT_PCT*itemSubtotal) ;
+    }
+    return paymentNums;
 }
 
 export function stateReducer(state:InvoiceData, signal:InvoiceDataSignal): InvoiceData{

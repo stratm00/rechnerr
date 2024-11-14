@@ -1,6 +1,6 @@
 "use client";
 import { InvoiceStateContext } from "@/lib/InvoiceContext";
-import { sumPayable } from "@/lib/InvoiceData";
+import { paymentNumbers, sumPayable } from "@/lib/InvoiceData";
 import { useContext } from "react"
 export default function ViewWidget(){
     const invoiceData = useContext(InvoiceStateContext);
@@ -26,7 +26,7 @@ export default function ViewWidget(){
 //     }
 // }
 
-function InvoiceAddressCard({ type: "invoicee" | "sender" }) {
+function InvoiceAddressCard({type}:{type:"invoicee"|"sender"}) {
     const invoiceData = useContext(InvoiceStateContext);
     const addressObj = (type==="invoicee")? invoiceData.invoicee : invoiceData.sender;
     return <>
@@ -44,5 +44,12 @@ function InvoiceItemTable(){
 }
 function InvoiceTotalStatement(){
     const invoiceData = useContext(InvoiceStateContext);
-    return <p>Summen: {sumPayable(invoiceData)}</p>
+    const numerics = paymentNumbers(invoiceData);
+    //Summe aller Nettoleistungen
+    //Summe mit MwSt
+    //Abzüge
+    //Summe
+    return <ul><li>Vorsumme: {numerics.subtotal.toFixed(2)}€</li><li>Steuer: {numerics.taxes.toFixed(2)}€</li>
+    <li>Abzüglich: {numerics.discount.toFixed(2)}€</li>
+    <li>Summe: {(numerics.subtotal-numerics.discount).toFixed(2)}€</li></ul>
 }
