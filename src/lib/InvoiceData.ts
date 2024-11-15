@@ -75,7 +75,7 @@ type PaymentNumbers = {
     discount:number
 }
 export function paymentNumbers(ivd:InvoiceData): PaymentNumbers{
-    let paymentNums = {subtotal:0, taxes:0, total:0, discount:ivd.discountGiven ?? 0};
+    const paymentNums = {subtotal:0, taxes:0, total:0, discount:ivd.discountGiven ?? 0};
     for (const it of ivd.items){
         const itemSubtotal = it.unitCost*it.units;
         paymentNums.subtotal+=itemSubtotal;
