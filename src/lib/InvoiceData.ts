@@ -55,18 +55,19 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
             vat: "incl"
         }
     ],
-    discountGiven: 0,
+    discountGiven: 100,
     dateDue: ""
 } 
 
 
 export type InvoiceDataSignal = {
-    kind: 'set_invoicee' | 'set_sender' | 'set_items' | 'set_date_given' | 'set_date_due' | 'set_scr' | 'set_discount' | 'switch_parties',
+    kind: 'set_invoicee' | 'set_sender' | 'set_items' | 'set_date_given' | 'set_date_due' | 'set_scr' | 'set_discount' | 'switch_parties' | 'set_state',
     paymentAddress?:PaymentAddress
     date?:string,
     scr?:string,
     discount?:number,
     items?:Item[]
+    newState?:InvoiceData
 }
 
 type PaymentNumbers = {
@@ -147,6 +148,11 @@ export function stateReducer(state:InvoiceData, signal:InvoiceDataSignal): Invoi
             return {...state,
                 invoicee:state.sender,
                 sender:state.invoicee
+            }
+        }
+        case "set_state": {
+            if (signal.newState!==undefined){
+                return signal.newState;
             }
         }
     }
