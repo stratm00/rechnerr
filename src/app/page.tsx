@@ -16,9 +16,9 @@ export default function Home() {
   
 
  return (
-    <div className="font-[family-name:var(--font-geist-sans)]">
+    <div className="flex font-[family-name:var(--font-geist-sans)]">
       <InvoiceStateContext.Provider value={invoiceState}>
-      <div className="max-w-xl min-w-sm flex print-invisible">
+      <div className="max-w-sm min-w-sm flex print-invisible">
         <InvoiceDispatchContext.Provider value={invoiceDispatch}>
           <FormWidget/>
         </InvoiceDispatchContext.Provider>
