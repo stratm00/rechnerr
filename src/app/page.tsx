@@ -18,10 +18,14 @@ export default function Home() {
  return (
     <div className="font-[family-name:var(--font-geist-sans)]">
       <InvoiceStateContext.Provider value={invoiceState}>
+      <div className="max-w-xl min-w-sm flex print-invisible">
         <InvoiceDispatchContext.Provider value={invoiceDispatch}>
           <FormWidget/>
         </InvoiceDispatchContext.Provider>
+      </div>
+      <article id="invoice" className="py-20 max-w-7xl mx-auto text-sm">
         <ViewWidget/>
+      </article>
       </InvoiceStateContext.Provider>
     </div>
   );

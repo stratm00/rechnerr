@@ -14,7 +14,7 @@ export default function FormWidget(){
         if (locStorStage!==null){
             invoiceDispatch({
                 kind:"set_state",
-                state:locStorStage
+                newState:locStorStage
             });
         } 
     }

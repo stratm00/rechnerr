@@ -42,13 +42,15 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
         }
     },
     items: [
-        {
+        {  
+            id:0,
             descriptor: "Beratungseinheiten",
             unitCost: 1800,
             units: 2,
             vat: "excl"
         },
         {
+            id:1,
             descriptor: "Schuldenübertrag an Fremde",
             unitCost: 100,
             units:1,
@@ -95,7 +97,7 @@ export function stateReducer(state:InvoiceData, signal:InvoiceDataSignal): Invoi
             }
             break;
         }
-        case "set_sender": {
+        case "set_sender" : {
             if(signal.paymentAddress!==undefined){
                 return {...state,
                     sender:signal.paymentAddress
