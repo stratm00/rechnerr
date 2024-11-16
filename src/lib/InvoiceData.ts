@@ -3,7 +3,8 @@ export const LOCALSTORAGE_KEY = "invoiceState"
 
 type PaymentAddress = {
     name: string,
-    address?:{ street_address:string, zipcode:string}
+    address?:{ street_address:string, zipcode:string},
+    iban:string
 }
 
 type Item = {
@@ -24,6 +25,7 @@ export type InvoiceData = {
     dateDue: string,
     structuredCreditorRef?: string,
     discountGiven?:number,
+    paymentRef:string
 }
 
 export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
@@ -32,14 +34,16 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
         address: {
             street_address: "Zechestraße 7",
             zipcode: "00000 Koblenz"
-        }
+        },
+        iban: "DE02370502990000684712"
     },
     sender: {
         name: "Anwaltskanzlei Prassel und Tassel",
         address: {
             street_address: "Hohe Gerichtsstraße 19",
             zipcode: "01010 Annastadt"
-        }
+        },
+        iban: "DE02120300000000202051"
     },
     items: [
         {  
@@ -58,7 +62,8 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
         }
     ],
     discountGiven: 100,
-    dateDue: ""
+    dateDue: "",
+    paymentRef: "REF"
 } 
 
 

@@ -1,8 +1,9 @@
 "use client";
 import { InvoiceStateContext } from "@/lib/InvoiceContext";
 import { paymentNumbers } from "@/lib/InvoiceData";
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import QRCode from "qrcode"
+import getStructuredCreditorReference from "@/lib/scr";
 export default function ViewWidget(){
     return <>
         <div id="addressCntnr" className="py-5 ">
@@ -82,15 +83,23 @@ function InvoiceTotalStatement(){
 
 function InvoicePaymentDetails(){
     const invoiceData = useContext(InvoiceStateContext);
+    const [ scr, setSCR] = useState("[keine]");
     //Bilde QR-Code jedesmal wenn [IBAN, REFERENZ, SUMME] sich ändert (im grunde alles uezs)
     useEffect(() => {
         //Generiere EPC-Inhalte
-        QRCode.toCanvas(document.getElementById("EPC2"), `${invoiceData.invoicee.name}-${invoiceData.sender.name}` ).catch(() => {alert("Fehler bei der Generation des QR-Codes für die Zahlung")});
+        // - generiere SCR
+        const paymentData = paymentNumbers(invoiceData)
+        const paymentSum = (paymentData.subtotal+paymentData.taxes-paymentData.discount).toFixed(2)
+        const paymentSCR = getStructuredCreditorReference(invoiceData.paymentRef, "print");
+        const purpose = "RNRR"
+        const epcDataString = `BCD0021SCT${invoiceData.sender.name}${invoiceData.sender.iban}${paymentSum}${purpose}${paymentSCR}`
+        setSCR(paymentSCR);
+        QRCode.toCanvas(document.getElementById("EPC2"), `${epcDataString}`, {errorCorrectionLevel: 'M'} ).catch(() => {alert("Fehler bei der Generation des QR-Codes für die Zahlung")});
         return () => {}
     }, [invoiceData])
     return <>
-        <h2>an IBAN: DE19198302180213021</h2>
-        <h2>Referenz: RF4REF</h2>
+        <h2>an IBAN: {invoiceData.sender.iban}</h2>
+        <h2>Referenz: {scr}</h2>
         <h3> Oder scannen sie den folgenden QR CODE:</h3>
         <canvas id="EPC2" className="bg-inherit w-[100] h-[100]"></canvas>
         </>
