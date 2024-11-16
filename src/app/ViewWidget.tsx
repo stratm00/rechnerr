@@ -21,7 +21,7 @@ export default function ViewWidget(){
 function InvoiceTitleStatement(){
     const invoiceData = useContext(InvoiceStateContext);
     
-    return <h1 className="font-extrabold">Rechnung von {invoiceData.invoicee.name} an {invoiceData.sender.name}</h1>
+    return <h1>Rechnung von {invoiceData.invoicee.name} an {invoiceData.sender.name}</h1>
 }
 type InvoiceAddressCardProps = {readonly type: "invoicee"|"sender"};
 function InvoiceAddressCard({type}:InvoiceAddressCardProps) {
@@ -53,7 +53,7 @@ function InvoiceItemTable(){
         <tbody>
         {invoiceData.items.map((it) => 
         <tr key={it.id}>
-            <td>{it.id}</td>
+            <td className="text-center">{it.id}</td>
             <td>{it.descriptor}</td>
             <td className="text-center">{it.vat!=="excl"?  "❌":"✅"}</td>
             <td className="text-right">{it.unitCost.toFixed(2)}€</td>
