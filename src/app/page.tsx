@@ -10,20 +10,19 @@ import { InvoiceDispatchContext, InvoiceStateContext } from "@/lib/InvoiceContex
 
 
 export default function Home() {
-  let initialInvoiceState = DEFAULT_INITIAL_INVOICE_STATE;
   
-  const [invoiceState, invoiceDispatch] = useReducer(stateReducer, initialInvoiceState);
+  const [invoiceState, invoiceDispatch] = useReducer(stateReducer, DEFAULT_INITIAL_INVOICE_STATE);
   
 
  return (
     <div className="flex font-[family-name:var(--font-geist-sans)]">
       <InvoiceStateContext.Provider value={invoiceState}>
-      <div className="max-w-sm min-w-sm flex print-invisible">
+      <div className="max-w-sm min-w-sm flex print-invisible text-sm">
         <InvoiceDispatchContext.Provider value={invoiceDispatch}>
           <FormWidget/>
         </InvoiceDispatchContext.Provider>
       </div>
-      <article id="invoice" className="py-20 max-w-7xl mx-auto text-sm">
+      <article id="invoice" className="py-20 max-w-7xl mx-auto text-md">
         <ViewWidget/>
       </article>
       </InvoiceStateContext.Provider>

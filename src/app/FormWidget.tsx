@@ -21,15 +21,6 @@ export default function FormWidget(){
     function handleSaveToLocalStorage(){
         localStorage.setItem(LOCALSTORAGE_KEY, JSON.stringify(invoiceData));
     }
-    function discountAction(formData: { get: (arg0: string) => any; }){
-        const discount = formData.get("discount")
-        if(!isNaN(Number(discount))){
-            invoiceDispatch({
-                kind: 'set_discount',
-                discount: Number(discount)
-            })
-        }
-    }
     
     return <div className="print-invisible">
         <p> Editiere hier: </p>
@@ -40,8 +31,8 @@ export default function FormWidget(){
             <button onClick={handleSaveToLocalStorage}>S</button>
         <button onClick={handleLoadFromLocalStorage}>L</button>
         
-        <InvoicePartyEditForm party="sender"/>
         <InvoicePartyEditForm party="invoicee"/>
+        <InvoicePartyEditForm party="sender"/>
         
 
         <DiscountEditForm/>
@@ -70,11 +61,11 @@ function InvoicePartyEditForm({party}:PartyProps){
         })
     }
     return <form className="p-4">
-            <input type="text" className="rounded-md border-b-slate-100 text-slate-700" value={localName} onChange={(e)=>{setLocalName(e.target.value)}}/>
-            <input type="text" className="rounded-md border-b-slate-100 text-slate-700" value={localIBAN} onChange={(e)=>{setLocalIBAN(e.target.value)}}/>
-            <input type="text" className="rounded-md border-b-slate-100 text-slate-700" value={localStreetAddress} onChange={(e)=>{setLocalStreetAddress(e.target.value)}}/>
-            <input type="text" className="rounded-md border-b-slate-100 text-slate-700" value={localZipcode} onChange={(e)=>{setLocalZipcode(e.target.value)}}/>
-            <input type="submit" className="rounded-md border-b-slate-100 text-slate-700"  value="✅" onClick={(e)=>{e.preventDefault(); handleSubmit()}}/>
+            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localName} onChange={(e)=>{setLocalName(e.target.value)}}/>
+            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localIBAN} onChange={(e)=>{setLocalIBAN(e.target.value)}}/>
+            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localStreetAddress} onChange={(e)=>{setLocalStreetAddress(e.target.value)}}/>
+            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localZipcode} onChange={(e)=>{setLocalZipcode(e.target.value)}}/>
+            <input type="submit" className="rounded-md border-solid border-2 border-slate-300 text-slate-700"  value="🔄" onClick={(e)=>{e.preventDefault(); handleSubmit()}}/>
         </form>
 }
 function DiscountEditForm(){
@@ -89,8 +80,8 @@ function DiscountEditForm(){
         })
     }
     
-    return <form>
-        <input type="number" id="discount" value={currentDiscount} onChange={(e) => setCurrentDiscount(Number(e.target.value))}/>
-        <input type="submit" value="✅" onClick={(e)=>{handleSubmit();e.preventDefault()}}/>
+    return <form className="p-4">
+        <input type="number" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" id="discount" value={currentDiscount} onChange={(e) => setCurrentDiscount(Number(e.target.value))}/>
+        <input type="submit" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value="🔄" onClick={(e)=>{handleSubmit();e.preventDefault()}}/>
     </form>
 }
