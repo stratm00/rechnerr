@@ -98,7 +98,7 @@ function InvoicePaymentDetails(){
     return <>
         <h2>an IBAN: {invoiceData.sender.iban}</h2>
         <h2>Referenz: {scr}</h2>
-        <h3> Oder scannen sie den folgenden QR-Code:</h3>
+        <h3> Oder scannen Sie den folgenden QR-Code:</h3>
         <canvas id="EPC2" className="bg-inherit"></canvas>
         </>
 }
