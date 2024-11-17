@@ -10,7 +10,7 @@ Abhängigkeiten:
 
 TODO:
 - [ ] Änderbare Postenliste
-- [ ] Änderbare Informationen zum Rechnungssteller und Rechnungsempfänger
+- [ ] Änderbare Referenz für SCR
 
 Getan: 
 - [x] Setup
@@ -18,4 +18,6 @@ Getan:
 - [x] Generator für EPC-Code (GiroCode genannt)
 - [x] Interface
 - [x] Änderbarer Skonto
+- [x] Änderbare Informationen zum Rechnungssteller und Rechnungsempfänger
+
 

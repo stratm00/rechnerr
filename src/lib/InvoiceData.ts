@@ -3,7 +3,7 @@ export const LOCALSTORAGE_KEY = "invoiceState"
 
 type PaymentAddress = {
     name: string,
-    address?:{ street_address:string, zipcode:string},
+    address:{ street_address:string, zipcode:string},
     iban:string
 }
 

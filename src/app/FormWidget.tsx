@@ -39,10 +39,43 @@ export default function FormWidget(){
                         }}>Adressen wechseln </button>
             <button onClick={handleSaveToLocalStorage}>S</button>
         <button onClick={handleLoadFromLocalStorage}>L</button>
+        
+        <InvoicePartyEditForm party="sender"/>
+        <InvoicePartyEditForm party="invoicee"/>
+        
 
         <DiscountEditForm/>
         
     </div>;
+}
+type PartyProps = Readonly<{party:'sender'|'invoicee'}>;
+function InvoicePartyEditForm({party}:PartyProps){
+    const invoiceDispatch = useContext(InvoiceDispatchContext);
+    const invoiceData = useContext(InvoiceStateContext);
+    const chosenParty = party==='sender'?invoiceData.sender:invoiceData.invoicee;
+    
+    const [localName, setLocalName] = useState(chosenParty.name);
+    const [localIBAN, setLocalIBAN] = useState(chosenParty.iban);
+    const [localStreetAddress, setLocalStreetAddress] = useState(chosenParty.address?.street_address);
+    const [localZipcode, setLocalZipcode] = useState(chosenParty.address?.zipcode);
+    const handleSubmit = ()=>{
+        invoiceDispatch({
+            kind: (party==='sender')? 'set_sender':'set_invoicee',
+            paymentAddress: {
+                name: localName, address:{
+                    street_address:localStreetAddress,
+                    zipcode:localZipcode
+                }, iban:localIBAN
+            } 
+        })
+    }
+    return <form className="p-4">
+            <input type="text" className="rounded-md border-b-slate-100 text-slate-700" value={localName} onChange={(e)=>{setLocalName(e.target.value)}}/>
+            <input type="text" className="rounded-md border-b-slate-100 text-slate-700" value={localIBAN} onChange={(e)=>{setLocalIBAN(e.target.value)}}/>
+            <input type="text" className="rounded-md border-b-slate-100 text-slate-700" value={localStreetAddress} onChange={(e)=>{setLocalStreetAddress(e.target.value)}}/>
+            <input type="text" className="rounded-md border-b-slate-100 text-slate-700" value={localZipcode} onChange={(e)=>{setLocalZipcode(e.target.value)}}/>
+            <input type="submit" className="rounded-md border-b-slate-100 text-slate-700"  value="✅" onClick={(e)=>{e.preventDefault(); handleSubmit()}}/>
+        </form>
 }
 function DiscountEditForm(){
     const invoiceDispatch = useContext(InvoiceDispatchContext);

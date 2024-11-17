@@ -84,10 +84,8 @@ function InvoiceTotalStatement(){
 function InvoicePaymentDetails(){
     const invoiceData = useContext(InvoiceStateContext);
     const [ scr, setSCR] = useState("[keine]");
-    //Bilde QR-Code jedesmal wenn [IBAN, REFERENZ, SUMME] sich ändert (im grunde alles uezs)
+    
     useEffect(() => {
-        //Generiere EPC-Inhalte
-        // - generiere SCR
         const paymentData = paymentNumbers(invoiceData)
         const paymentSum = (paymentData.subtotal+paymentData.taxes-paymentData.discount).toFixed(2)
         const paymentSCR = getStructuredCreditorReference(invoiceData.paymentRef, "print");
@@ -100,7 +98,7 @@ function InvoicePaymentDetails(){
     return <>
         <h2>an IBAN: {invoiceData.sender.iban}</h2>
         <h2>Referenz: {scr}</h2>
-        <h3> Oder scannen sie den folgenden QR CODE:</h3>
-        <canvas id="EPC2" className="bg-inherit w-[100] h-[100]"></canvas>
+        <h3> Oder scannen sie den folgenden QR-Code:</h3>
+        <canvas id="EPC2" className="bg-inherit"></canvas>
         </>
 }
