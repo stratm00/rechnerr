@@ -10,7 +10,7 @@ Abhängigkeiten:
 
 TODO:
 - [ ] Änderbare Postenliste
-- [ ] Änderbare Referenz für SCR
+- [ ] Änderbare Referenz für SCR 
 
 Getan: 
 - [x] Setup

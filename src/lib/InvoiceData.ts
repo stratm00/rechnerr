@@ -8,7 +8,7 @@ type PaymentAddress = {
 }
 
 type Item = {
-    id?:number,
+    id:number,
     descriptor:string,
     unitCost:number,
     units:number,

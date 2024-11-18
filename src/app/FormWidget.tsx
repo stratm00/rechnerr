@@ -4,6 +4,7 @@ import { retrieveStateFromLocalStorage } from "@/lib/generic";
 import { InvoiceDispatchContext, InvoiceStateContext } from "@/lib/InvoiceContext";
 import { InvoiceData, LOCALSTORAGE_KEY } from "@/lib/InvoiceData";
 import { useContext, useState } from "react";
+import ItemForm from "./ItemForm";
 
 export default function FormWidget(){
     const invoiceDispatch = useContext(InvoiceDispatchContext);
@@ -34,9 +35,9 @@ export default function FormWidget(){
         <InvoicePartyEditForm party="invoicee"/>
         <InvoicePartyEditForm party="sender"/>
         
-
+        <ItemForm/>
         <DiscountEditForm/>
-        
+        <button className="bg-red-800 text-stone-500 h-10 min-w-full rounded-md" onClick={window.print}>🖨Druck</button>
     </div>;
 }
 type PartyProps = Readonly<{party:'sender'|'invoicee'}>;
@@ -62,9 +63,9 @@ function InvoicePartyEditForm({party}:PartyProps){
     }
     return <form className="p-4">
             <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localName} onChange={(e)=>{setLocalName(e.target.value)}}/>
-            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localIBAN} onChange={(e)=>{setLocalIBAN(e.target.value)}}/>
             <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localStreetAddress} onChange={(e)=>{setLocalStreetAddress(e.target.value)}}/>
             <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localZipcode} onChange={(e)=>{setLocalZipcode(e.target.value)}}/>
+            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localIBAN} onChange={(e)=>{setLocalIBAN(e.target.value)}}/>
             <input type="submit" className="rounded-md border-solid border-2 border-slate-300 text-slate-700"  value="🔄" onClick={(e)=>{e.preventDefault(); handleSubmit()}}/>
         </form>
 }
