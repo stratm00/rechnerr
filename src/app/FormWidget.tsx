@@ -37,7 +37,7 @@ export default function FormWidget(){
         
         <ItemForm/>
         <DiscountEditForm/>
-        <button className="bg-red-800 text-stone-500 h-10 min-w-full rounded-md" onClick={window.print}>🖨Druck</button>
+        <button className="bg-red-800 text-stone-500 h-10 min-w-full rounded-md" onClick={()=>window.print()}>🖨Druck</button>
     </div>;
 }
 type PartyProps = Readonly<{party:'sender'|'invoicee'}>;

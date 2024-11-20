@@ -7,7 +7,7 @@ type PaymentAddress = {
     iban:string
 }
 
-type Item = {
+export type Item = {
     id:number,
     descriptor:string,
     unitCost:number,
