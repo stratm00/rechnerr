@@ -56,7 +56,7 @@ function InvoiceItemTable(){
         <tr key={it.id}>
             <td className="text-center">{it.id}</td>
             <td>{it.descriptor}</td>
-            <td className="text-center">{it.vat!=="excl"?  "❌":"✅"}</td>
+            <td className="text-center">{it.vat!=="incl"?  "❌":"✅"}</td>
             <td className="text-right">{it.unitCost.toFixed(2)}€</td>
             <td className="text-right">{it.units}</td>
             <td className="text-right">{(it.unitCost*it.units).toFixed(2)}€</td>

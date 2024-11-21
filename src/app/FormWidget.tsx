@@ -37,9 +37,10 @@ export default function FormWidget(){
         
         <ItemForm/>
         <DiscountEditForm/>
-        <button className="bg-red-800 text-stone-500 h-10 min-w-full rounded-md" onClick={()=>window.print()}>🖨Druck</button>
+        <button className="bg-red-800 text-stone-500 h-10 m-4 min-w-10 rounded-md" onClick={()=>window.print()}>🖨Druck</button>
     </div>;
 }
+
 type PartyProps = Readonly<{party:'sender'|'invoicee'}>;
 function InvoicePartyEditForm({party}:PartyProps){
     const invoiceDispatch = useContext(InvoiceDispatchContext);
@@ -69,6 +70,7 @@ function InvoicePartyEditForm({party}:PartyProps){
             <input type="submit" className="rounded-md border-solid border-2 border-slate-300 text-slate-700"  value="🔄" onClick={(e)=>{e.preventDefault(); handleSubmit()}}/>
         </form>
 }
+
 function DiscountEditForm(){
     const invoiceDispatch = useContext(InvoiceDispatchContext);
     const invoiceData = useContext(InvoiceStateContext);

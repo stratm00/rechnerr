@@ -15,7 +15,6 @@ export type Item = {
     vat: 'incl' | 'excl'
 }
 
-// type 
 
 export type InvoiceData = {
     invoicee: PaymentAddress,
@@ -66,7 +65,6 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
     paymentRef: "REF"
 } 
 
-
 export type InvoiceDataSignal = {
     kind: 'set_invoicee' | 'set_sender' | 'set_items' | 'set_date_given' | 'set_date_due' | 'set_scr' | 'set_discount' | 'switch_parties' | 'set_state',
     paymentAddress?:PaymentAddress
@@ -110,10 +108,11 @@ export function stateReducer(state:InvoiceData, signal:InvoiceDataSignal): Invoi
             }
             break;
         }
+        //Invariant: items are sorted asc. by ID
         case "set_items": {
             if(signal.items!==undefined){
                 return {...state,
-                    items:signal.items
+                    items:signal.items.toSorted((a,b)=>a.id-b.id)
                 }
             }
             break;
