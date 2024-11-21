@@ -9,8 +9,8 @@ Abhängigkeiten:
 - soldair/node-qrcode
 
 TODO:
-- [ ] Änderbare Postenliste
 - [ ] Änderbare Referenz für SCR 
+- [ ] Rework des EPC-Generatoren: Momentan wird alles als UTF-8-Text gelesen, es ist nicht scanbar
 
 Getan: 
 - [x] Setup
@@ -19,5 +19,6 @@ Getan:
 - [x] Interface
 - [x] Änderbarer Skonto
 - [x] Änderbare Informationen zum Rechnungssteller und Rechnungsempfänger
+- [x] Änderbare Postenliste
 
 
