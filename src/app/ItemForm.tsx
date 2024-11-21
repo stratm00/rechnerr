@@ -12,11 +12,14 @@ export default function ItemForm(){
         invoiceDispatch({kind:'set_items', items:localItems});
     }
     const nextID = useMemo(()=>localItems.length, [localItems]);
-    let handleFormByID = (id:number) => (formData: FormData) => {
+
+    const localStateDifferences = useMemo(()=>(JSON.stringify(localItems)!=JSON.stringify(invoiceData.items)), [localItems, invoiceData.items]);
+
+    const handleFormByID = (id:number) => (formData: FormData) => {
         //Update localItems(id)
         
-        let newLocalItems = localItems.filter(el=>el.id!==id);
-        let newlyBuiltItem: Item = {
+        const newLocalItems = localItems.filter(el=>el.id!==id);
+        const newlyBuiltItem: Item = {
             id: Number(formData.get("item_id")),
             descriptor: formData.get("item_descriptor")?.toString() ?? "",
             unitCost: Number(formData.get("item_unit_cost")),
@@ -28,12 +31,12 @@ export default function ItemForm(){
         newLocalItems.sort((a,b)=>a.id-b.id)
         setLocalItems(newLocalItems)
     };
-    let deleteItem = (id:number) => {
+    const deleteItem = (id:number) => {
         setLocalItems(localItems.filter((it)=>it.id!==id))
     } 
-    let localNewItem = () => {
+    const localNewItem = () => {
         //HACK: Array copy
-        let newLocalItems = localItems.filter(x=>true)
+        const newLocalItems = localItems.filter(()=>true)
         newLocalItems.push({
             id: nextID,
             descriptor: "--New Item--",
@@ -55,11 +58,11 @@ export default function ItemForm(){
                     <div className="min-w-full"><input type="checkbox" id={`item_vat${item.id}`} name="item_vat" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" defaultChecked={item.vat==='incl'}></input>
                     <label htmlFor={`item_vat${item.id}`} className="mx-2">Steuer enthalten</label></div>
                     <input className="rounded-md p-2 bg-lime-800"type="submit" value="Zwischenspeichern"></input>
-                    <button className="bg-rose-800 rounded-md p-2 mx-2" onClick={e=> {deleteItem(item.id)}}>Löschen</button>
+                    <button className="bg-rose-800 rounded-md p-2 mx-2" onClick={()=> {deleteItem(item.id)}}>Löschen</button>
                 </form>
             })}
         </ul>
-        <button onClick={moveItemsIntoState} className="p-4 justify-center bg-slate-950 font-semibold">REFRESH ITEMS</button>
+        <button onClick={moveItemsIntoState} className="p-4 justify-center bg-slate-950 font-semibold">REFRESH ITEMS {localStateDifferences && 'NOW'}</button>
         <button onClick={localNewItem} className="rounded-md-2 p-2 mx-2">Neues Item!</button>
     </div>;
 }
