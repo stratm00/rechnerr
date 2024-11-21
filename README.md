@@ -9,6 +9,7 @@ Abhängigkeiten:
 - soldair/node-qrcode
 
 TODO:
+- [ ] Indikation von Änderungen zw. FormWidget und globalem Status bzgl Items
 - [ ] Änderbare Referenz für SCR 
 - [ ] Rework des EPC-Generatoren: Momentan wird alles als UTF-8-Text gelesen, es ist nicht scanbar
 
