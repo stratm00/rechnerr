@@ -11,7 +11,7 @@ export default function ItemForm(){
         console.log("moveItemsIntoState")
         invoiceDispatch({kind:'set_items', items:localItems});
     }
-    const nextID = useMemo(()=>{console.log(`neumaxid:${localItems.length}`);return localItems.length;}, [localItems]);
+    const nextID = useMemo(()=>localItems.length, [localItems]);
     let handleFormByID = (id:number) => (formData: FormData) => {
         //Update localItems(id)
         
