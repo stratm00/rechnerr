@@ -22,7 +22,7 @@ export type InvoiceData = {
     items:Item[],
     dateGiven?: string,
     dateDue: string,
-    structuredCreditorRef?: string,
+    // structuredCreditorRef?: string,
     discountGiven?:number,
     paymentRef:string
 }
@@ -134,14 +134,6 @@ export function stateReducer(state:InvoiceData, signal:InvoiceDataSignal): Invoi
             }
             break;
         }
-        case "set_scr": {
-            if(signal.scr!==undefined){
-                return {...state,
-                    structuredCreditorRef:signal.scr
-                }
-            }
-            break;
-        }
         case "set_payment_reference": {
             if(signal.ref!==undefined){
                 return {...state,
@@ -158,13 +150,8 @@ export function stateReducer(state:InvoiceData, signal:InvoiceDataSignal): Invoi
             }
             break;
         }
-        //Testsignal
-        case "switch_parties": {
-            return {...state,
-                invoicee:state.sender,
-                sender:state.invoicee
-            }
-        }
+        
+        
         case "set_state": {
             if (signal.newState!==undefined){
                 return signal.newState;

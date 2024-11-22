@@ -51,7 +51,7 @@ export default function ItemForm(){
     const moveItemsIntoState = ()=>{
         invoiceDispatch({kind:'set_items', items:localItems});
     }
-    
+
     return <>
         {localItems.map(item => {
                 return <form  className="py-4 ml-2" key={item.id} action={(formData) => {handleFormByID(item.id)(formData)}}>
@@ -66,7 +66,7 @@ export default function ItemForm(){
                     <button className="bg-rose-800 rounded-md p-2 mx-2" onClick={()=> {deleteItem(item.id)}}>Löschen</button>
                 </form>
             })}
-        <button onClick={localNewItem} className="bg-blue-800 rounded-md-2 p-2 font-bold">+</button>
+        <button onClick={localNewItem} className="bg-blue-800 rounded-md p-2 font-bold">+</button>
         <button onClick={moveItemsIntoState} className="p-2 rounded-md justify-center bg-slate-800 font-semibold mx-2">Posten aktualisieren{localStateDifferences && "!!"}</button>
         
     </>;
