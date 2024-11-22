@@ -4,7 +4,6 @@ import { paymentNumbers } from "@/lib/InvoiceData";
 import { useContext, useEffect, useState } from "react"
 import QRCode, { QRCodeSegment } from "qrcode"
 import getStructuredCreditorReference from "@/lib/scr";
-import { createPrerenderSearchParamsForClientPage } from "next/dist/server/request/search-params";
 export default function ViewWidget(){
     return <>
         <div id="addressCntnr" className="py-5 ">
