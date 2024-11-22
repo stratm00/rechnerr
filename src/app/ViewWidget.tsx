@@ -2,8 +2,9 @@
 import { InvoiceStateContext } from "@/lib/InvoiceContext";
 import { paymentNumbers } from "@/lib/InvoiceData";
 import { useContext, useEffect, useState } from "react"
-import QRCode from "qrcode"
+import QRCode, { QRCodeSegment } from "qrcode"
 import getStructuredCreditorReference from "@/lib/scr";
+import { createPrerenderSearchParamsForClientPage } from "next/dist/server/request/search-params";
 export default function ViewWidget(){
     return <>
         <div id="addressCntnr" className="py-5 ">
@@ -86,13 +87,48 @@ function InvoicePaymentDetails(){
     const [ scr, setSCR] = useState("[keine]");
     
     useEffect(() => {
+
+        const paymentSCR = getStructuredCreditorReference(invoiceData.paymentRef, "print");
+        setSCR(paymentSCR);
+
         const paymentData = paymentNumbers(invoiceData)
         const paymentSum = (paymentData.subtotal+paymentData.taxes-paymentData.discount).toFixed(2)
-        const paymentSCR = getStructuredCreditorReference(invoiceData.paymentRef, "print");
         const purpose = "RNRR"
-        const epcDataString = `BCD0021SCT${invoiceData.sender.name}${invoiceData.sender.iban}${paymentSum}${purpose}${paymentSCR}`
-        setSCR(paymentSCR);
-        QRCode.toCanvas(document.getElementById("EPC2"), `${epcDataString}`, {errorCorrectionLevel: 'M'} ).catch(() => {alert("Fehler bei der Generation des QR-Codes für die Zahlung")});
+        // const epcDataString = `BCD0021SCT${invoiceData.sender.name}${invoiceData.sender.iban}${paymentSum}${purpose}${paymentSCR}`
+        const segments = [
+            //ID: BCD
+            'BCD\n', 
+            //VER
+            '002\n',
+            //CHARSET: UTF-8 => 1
+            '1\n',
+            //FIXED: SCT, BIC(EMPTY)
+            'SCT\n',
+            //BIC(EMPTY)
+            '\n',
+            //NAME (max 70 chars) of Beneficiary
+            invoiceData.sender.name.slice(0,70)+"\n",
+            //IBAN of Beneficiary
+            invoiceData.sender.iban+"\n",
+            //AMT IN EURO
+            `EUR${paymentSum}\n`,
+            //PURPOSE            
+            purpose+'\n'+'\n',
+            //REMITTANCE REF:Structured Creditor Reference
+            paymentSCR+'\n',
+            //Remittance Text
+            '0'.repeat(70)+'\n'
+            //Beneficiary to Originator Information         
+        ]
+        const te = new TextEncoder();
+        //Forciere alles in Byte-Segmente
+        const byteSegments:QRCodeSegment[] = segments.map(seg => {
+            return {mode:'byte', data:te.encode(seg)}
+        })
+
+        QRCode.toCanvas(document.getElementById("EPC2"), byteSegments, {errorCorrectionLevel: 'M'} ).catch((e) => {console.log(e);alert("Fehler bei der Generation des QR-Codes für die Zahlung")});
+
+
         return () => {}
     }, [invoiceData])
     return <>
