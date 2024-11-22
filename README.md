@@ -9,7 +9,6 @@ Abhängigkeiten:
 - soldair/node-qrcode
 
 TODO:
-- [ ] Rework des EPC-Generatoren: Momentan wird alles als UTF-8-Text gelesen, es ist nicht scanbar
 
 
 Getan: 
@@ -24,6 +23,7 @@ Getan:
 - [x] Änderbare Referenz für SCR 
 - [x] Styling Rework: Skonto und Refnummer-Eingabe visuell sinnig gestalten
 - [x] Dockerfile
+- [x] Rework des EPC-Generatoren
 
 Maybes:
 - [ ] Crypto-Zahlungsmöglichkeiten (Preis in $BTC umwandeln, BIP21 QR bilden (https://bitcoinqr.dev/))
