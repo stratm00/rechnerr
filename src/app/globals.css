@@ -24,3 +24,6 @@ body {
     display:none;
   }
 }
+.print-invisible button, input[type=submit]{
+  color: #ffffff;
+}
