@@ -9,9 +9,7 @@ Abhängigkeiten:
 - soldair/node-qrcode
 
 TODO:
-- [ ] Änderbare Referenz für SCR 
 - [ ] Rework des EPC-Generatoren: Momentan wird alles als UTF-8-Text gelesen, es ist nicht scanbar
-- [ ] Styling Rework: Skonto und Refnummer-Eingabe visuell sinnig gestalten
 - [ ] CI/CD bauen von Docker Image
 
 Getan: 
@@ -23,6 +21,8 @@ Getan:
 - [x] Änderbare Informationen zum Rechnungssteller und Rechnungsempfänger
 - [x] Änderbare Postenliste
 - [x] Indikation von Änderungen zw. FormWidget und globalem Status bzgl Items
+- [x] Änderbare Referenz für SCR 
+- [x] Styling Rework: Skonto und Refnummer-Eingabe visuell sinnig gestalten
 
 
 Maybes:

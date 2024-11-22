@@ -47,9 +47,8 @@ export default function ItemForm(){
         setLocalItems(newLocalItems);
     }
     return <div>
-        <ul>
-            {localItems.map(item => {
-                return <form  className="p-4" key={item.id} action={(formData) => {handleFormByID(item.id)(formData)}}>
+        {localItems.map(item => {
+                return <form  className="py-4" key={item.id} action={(formData) => {handleFormByID(item.id)(formData)}}>
                     <input type="hidden" id="item_id" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" name="item_id" defaultValue={item.id}/>
                     <input type="text" id="item_descriptor" name="item_descriptor" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" defaultValue={item.descriptor}></input>
                     <input type="number" id="item_unit_cost" name="item_unit_cost" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" defaultValue={item.unitCost}></input>
@@ -61,8 +60,8 @@ export default function ItemForm(){
                     <button className="bg-rose-800 rounded-md p-2 mx-2" onClick={()=> {deleteItem(item.id)}}>Löschen</button>
                 </form>
             })}
-        </ul>
-        <button onClick={moveItemsIntoState} className="p-4 justify-center bg-slate-950 font-semibold">REFRESH ITEMS {localStateDifferences && 'NOW'}</button>
-        <button onClick={localNewItem} className="rounded-md-2 p-2 mx-2">Neues Item!</button>
+        <button onClick={localNewItem} className="bg-blue-800 rounded-md-2 p-2 font-bold">+</button>
+        <button onClick={moveItemsIntoState} className="p-2 rounded-md justify-center bg-slate-800 font-semibold mx-2">REFRESH ITEMS {localStateDifferences && 'NOW'}</button>
+        
     </div>;
 }

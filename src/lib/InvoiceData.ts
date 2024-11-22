@@ -66,12 +66,13 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
 } 
 
 export type InvoiceDataSignal = {
-    kind: 'set_invoicee' | 'set_sender' | 'set_items' | 'set_date_given' | 'set_date_due' | 'set_scr' | 'set_discount' | 'switch_parties' | 'set_state',
+    kind: 'set_invoicee' | 'set_sender' | 'set_items' | 'set_date_given' | 'set_date_due' | 'set_scr' | 'set_discount' | 'switch_parties' | 'set_payment_reference' | 'set_state',
     paymentAddress?:PaymentAddress
     date?:string,
     scr?:string,
     discount?:number,
-    items?:Item[]
+    items?:Item[],
+    ref?:string,
     newState?:InvoiceData
 }
 
@@ -137,6 +138,14 @@ export function stateReducer(state:InvoiceData, signal:InvoiceDataSignal): Invoi
             if(signal.scr!==undefined){
                 return {...state,
                     structuredCreditorRef:signal.scr
+                }
+            }
+            break;
+        }
+        case "set_payment_reference": {
+            if(signal.ref!==undefined){
+                return {...state,
+                    paymentRef:signal.ref
                 }
             }
             break;
