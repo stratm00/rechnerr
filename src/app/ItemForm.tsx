@@ -7,11 +7,8 @@ export default function ItemForm(){
     const invoiceData = useContext(InvoiceStateContext);
     const invoiceDispatch = useContext(InvoiceDispatchContext);
     const [localItems, setLocalItems] = useState(invoiceData.items);
-    function moveItemsIntoState(){
-        invoiceDispatch({kind:'set_items', items:localItems});
-    }
+    
     const nextID = useMemo(()=>localItems.length, [localItems]);
-
     const localStateDifferences = useMemo(()=>(JSON.stringify(localItems)!=JSON.stringify(invoiceData.items)), [localItems, invoiceData.items]);
 
     //Falls der Zustand der Items von außen verändert wird, adjustiere die localen Items
@@ -19,6 +16,7 @@ export default function ItemForm(){
         setLocalItems(invoiceData.items);
         return () => {};    
     }, [invoiceData.items]);
+    
     const handleFormByID = (id:number) => (formData: FormData) => {
         //Update localItems(id)
         
@@ -50,6 +48,10 @@ export default function ItemForm(){
         });
         setLocalItems(newLocalItems);
     }
+    const moveItemsIntoState = ()=>{
+        invoiceDispatch({kind:'set_items', items:localItems});
+    }
+    
     return <>
         {localItems.map(item => {
                 return <form  className="py-4 ml-2" key={item.id} action={(formData) => {handleFormByID(item.id)(formData)}}>
