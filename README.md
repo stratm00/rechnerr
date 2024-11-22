@@ -11,6 +11,8 @@ Abhängigkeiten:
 TODO:
 - [ ] Änderbare Referenz für SCR 
 - [ ] Rework des EPC-Generatoren: Momentan wird alles als UTF-8-Text gelesen, es ist nicht scanbar
+- [ ] Styling Rework: Skonto und Refnummer-Eingabe visuell sinnig gestalten
+- [ ] CI/CD bauen von Docker Image
 
 Getan: 
 - [x] Setup
@@ -23,3 +25,5 @@ Getan:
 - [x] Indikation von Änderungen zw. FormWidget und globalem Status bzgl Items
 
 
+Maybes:
+- [ ] Crypto-Zahlungsmöglichkeiten (Preis in $BTC umwandeln, BIP21 QR bilden (https://bitcoinqr.dev/))
