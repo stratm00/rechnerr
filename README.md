@@ -10,7 +10,7 @@ Abhängigkeiten:
 
 TODO:
 - [ ] Rework des EPC-Generatoren: Momentan wird alles als UTF-8-Text gelesen, es ist nicht scanbar
-- [ ] CI/CD bauen von Docker Image
+- [ ] Dockerfile
 
 Getan: 
 - [x] Setup
