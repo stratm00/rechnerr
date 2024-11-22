@@ -22,7 +22,7 @@ export default function ViewWidget(){
 function InvoiceTitleStatement(){
     const invoiceData = useContext(InvoiceStateContext);
     
-    return <h1>Rechnung von {invoiceData.invoicee.name} an {invoiceData.sender.name}</h1>
+    return <h1>Rechnung für {invoiceData.invoicee.name} an {invoiceData.sender.name}</h1>
 }
 type InvoiceAddressCardProps = {readonly type: "invoicee"|"sender"};
 function InvoiceAddressCard({type}:InvoiceAddressCardProps) {

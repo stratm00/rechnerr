@@ -1,20 +1,24 @@
 "use client";
 import { InvoiceDispatchContext, InvoiceStateContext } from "@/lib/InvoiceContext";
 import { Item } from "@/lib/InvoiceData";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 
 export default function ItemForm(){
     const invoiceData = useContext(InvoiceStateContext);
     const invoiceDispatch = useContext(InvoiceDispatchContext);
     const [localItems, setLocalItems] = useState(invoiceData.items);
     function moveItemsIntoState(){
-        console.log("moveItemsIntoState")
         invoiceDispatch({kind:'set_items', items:localItems});
     }
     const nextID = useMemo(()=>localItems.length, [localItems]);
 
     const localStateDifferences = useMemo(()=>(JSON.stringify(localItems)!=JSON.stringify(invoiceData.items)), [localItems, invoiceData.items]);
 
+    //Falls der Zustand der Items von außen verändert wird, adjustiere die localen Items
+    useEffect(() => {
+        setLocalItems(invoiceData.items);
+        return () => {};    
+    }, [invoiceData.items]);
     const handleFormByID = (id:number) => (formData: FormData) => {
         //Update localItems(id)
         
@@ -26,7 +30,7 @@ export default function ItemForm(){
             units: Number(formData.get("item_units")),
             vat: formData.get("item_vat")?"incl":"excl"
         }
-        console.log(newlyBuiltItem)
+        
         newLocalItems.push(newlyBuiltItem)
         newLocalItems.sort((a,b)=>a.id-b.id)
         setLocalItems(newLocalItems)
@@ -46,9 +50,9 @@ export default function ItemForm(){
         });
         setLocalItems(newLocalItems);
     }
-    return <div>
+    return <>
         {localItems.map(item => {
-                return <form  className="py-4" key={item.id} action={(formData) => {handleFormByID(item.id)(formData)}}>
+                return <form  className="py-4 ml-2" key={item.id} action={(formData) => {handleFormByID(item.id)(formData)}}>
                     <input type="hidden" id="item_id" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" name="item_id" defaultValue={item.id}/>
                     <input type="text" id="item_descriptor" name="item_descriptor" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" defaultValue={item.descriptor}></input>
                     <input type="number" id="item_unit_cost" name="item_unit_cost" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" defaultValue={item.unitCost}></input>
@@ -61,7 +65,7 @@ export default function ItemForm(){
                 </form>
             })}
         <button onClick={localNewItem} className="bg-blue-800 rounded-md-2 p-2 font-bold">+</button>
-        <button onClick={moveItemsIntoState} className="p-2 rounded-md justify-center bg-slate-800 font-semibold mx-2">REFRESH ITEMS {localStateDifferences && 'NOW'}</button>
+        <button onClick={moveItemsIntoState} className="p-2 rounded-md justify-center bg-slate-800 font-semibold mx-2">Posten aktualisieren{localStateDifferences && "!!"}</button>
         
-    </div>;
+    </>;
 }

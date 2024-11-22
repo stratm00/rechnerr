@@ -5,8 +5,9 @@ import { InvoiceDispatchContext, InvoiceStateContext } from "@/lib/InvoiceContex
 import { InvoiceData, LOCALSTORAGE_KEY } from "@/lib/InvoiceData";
 import { useContext, useState } from "react";
 import ItemForm from "./ItemForm";
+import FormLabel from "./FormLabel";
 
-const [MIN_REF_LENGTH, MAX_REF_LENGTH] = [2,10];
+const [MIN_REF_LENGTH, MAX_REF_LENGTH] = [1,10];
 
 export default function FormWidget(){
     const invoiceDispatch = useContext(InvoiceDispatchContext);
@@ -32,7 +33,7 @@ export default function FormWidget(){
         <ReferenceEditForm/>
         <InvoicePartyEditForm party="invoicee"/>
         <InvoicePartyEditForm party="sender"/>
-        
+        <h2>Posten</h2>
         <ItemForm/>
         <DiscountEditForm/>
         <button className="bg-rose-800 py-2 px-16 min-w-10 rounded-md" onClick={()=>window.print()}>🖨Druck</button>
@@ -61,10 +62,11 @@ function InvoicePartyEditForm({party}:PartyProps){
         })
     }
     return <form className="py-4">
+            <FormLabel htmlFor="" text={party==="sender"?"Kreditor":"Schuldner"}/>
             <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localName} onChange={(e)=>{setLocalName(e.target.value)}}/>
             <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700 mt-2" value={localStreetAddress} onChange={(e)=>{setLocalStreetAddress(e.target.value)}}/>
-            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value={localZipcode} onChange={(e)=>{setLocalZipcode(e.target.value)}}/>
-            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700 mt-2" value={localIBAN} onChange={(e)=>{setLocalIBAN(e.target.value)}}/>
+            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700 mb-2" value={localZipcode} onChange={(e)=>{setLocalZipcode(e.target.value)}}/>
+            <input type="text" className="rounded-md border-solid border-2 border-slate-300 text-slate-700 " value={localIBAN} onChange={(e)=>{setLocalIBAN(e.target.value)}}/>
             <input type="submit" className="rounded-md border-solid border-2 border-slate-300 text-slate-700"  value="🔄" onClick={(e)=>{e.preventDefault(); handleSubmit()}}/>
         </form>
 }
@@ -82,7 +84,7 @@ function DiscountEditForm(){
     }
     
     return <form className="py-6">
-        <label htmlFor="discount" className="min-w-full inline-block">Skonto</label>
+        <FormLabel htmlFor="discount" text="Skonto"/>
         <input type="number" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" id="discount" name="discount" value={currentDiscount} onChange={(e) => setCurrentDiscount(Number(e.target.value))}/>
         <input type="submit" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" value="🔄" onClick={(e)=>{handleSubmit();e.preventDefault()}}/>
     </form>
@@ -101,8 +103,8 @@ function ReferenceEditForm(){
             });
     }
     return <form className="py-6" action={handleReferenceSubmit}>
-        <label htmlFor="ref_input" className="min-w-full inline-block">Referenz</label>
-        <input className="rounded-md border-solid border-2 border-slate-300 text-slate-700" type="text" name="ref_input" defaultValue={localRef} onChange={(e)=>{console.log("onchange");setLocalRef(e.target.value)}}></input>
+        <FormLabel htmlFor="ref_input" text="Referenz"/>
+        <input className="rounded-md border-solid border-2 border-slate-300 text-slate-700" type="text" name="ref_input" defaultValue={localRef} onChange={(e)=>{setLocalRef(e.target.value)}}></input>
         <input className="rounded-md border-solid border-2 border-slate-300 text-slate-700" type="submit" value="🔄"></input>
     </form>
 }

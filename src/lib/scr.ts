@@ -4,7 +4,7 @@
  * 
  */
 export default function getStructuredCreditorReference(desc:string ,format: "print"|"digital"): string {
-    if(desc.length >= 10 || desc.length <1) throw new Error("SCR Reference needs to be a correct length");
+    if(desc.length >= 10 || desc.length<1) throw new Error("SCR Reference needs to be a correct length");
     const numValsList = desc.split("").map(_getCharVal);
     //27 15 00 ~= RF 00 -> Wir berechnen die richtigen Prüfziffern für die Referenz
     const totalNumValue = numValsList.join("")+"271500";
