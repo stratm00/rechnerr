@@ -23,13 +23,6 @@ function _getCharVal(input:string): number{
 }
 
 /*
-Validiere SCR: 
-1. Bewege RFXX an die vier letzten Stellen
-2. Char Vals aneinanderreihen
-3. Falls die große Val Nummer mod 97 == 1: richtig
-
-
-
 Finde RFXY:
 1. Finde passendes Vielfaches von 97
 2. Y + 10*(X + 10000*(2715 + 1000*(charVals))) = c*97+1
