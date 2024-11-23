@@ -124,7 +124,8 @@ function InvoicePaymentDetails(){
             //Beneficiary to Originator Information         
         ]
         const te = new TextEncoder();
-        //Forciere alles in Byte-Segmente
+
+        //Alles in Byte-Segmente
         const byteSegments:QRCodeSegment[] = segments.map(seg => {
             return {mode:'byte', data:te.encode(seg)}
         })
@@ -135,10 +136,10 @@ function InvoicePaymentDetails(){
         return () => {}
     }, [invoiceData])
     return <>
-        <p>Bitte zahlen Sie die angegebene Summe zeitlich, sodass sie sich am {invoiceData.dateDue.toLocaleDateString()} beim Empfänger befindet.</p>
-        <h2>an IBAN: {invoiceData.sender.iban}</h2>
-        <h2>Referenz: {scr}</h2>
-        <h3> Oder scannen Sie den folgenden QR-Code:</h3>
+        <p className="mt-2">Bitte zahlen Sie die angegebene Summe zeitlich, sodass sie sich am {invoiceData.dateDue.toLocaleDateString()} beim Empfänger befindet.</p>
+        <p>an IBAN: {invoiceData.sender.iban}</p>
+        <p>Referenz: {scr}</p>
+        <p> Oder scannen Sie den folgenden QR-Code:</p>
         <canvas id="EPC2" className="bg-inherit"></canvas>
         </>
 }

@@ -22,7 +22,6 @@ export type InvoiceData = {
     items:Item[],
     dateGiven?: Date,
     dateDue: Date,
-    // structuredCreditorRef?: string,
     discountGiven?:number,
     paymentRef:string
 }
@@ -61,8 +60,8 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
         }
     ],
     discountGiven: 100,
-    dateDue: new Date(0),
-    dateGiven: new Date(0),
+    dateDue: new Date(2024, 10, 23),
+    dateGiven: new Date(2024,10, 13),
     paymentRef: "REF"
 } 
 
