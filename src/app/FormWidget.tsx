@@ -3,7 +3,7 @@
 import { retrieveStateFromLocalStorage } from "@/lib/generic";
 import { InvoiceDispatchContext, InvoiceStateContext } from "@/lib/InvoiceContext";
 import { InvoiceData, LOCALSTORAGE_KEY } from "@/lib/InvoiceData";
-import { useContext, useState } from "react";
+import { ChangeEventHandler, useContext, useState } from "react";
 import ItemForm from "./ItemForm";
 import FormLabel from "./FormLabel";
 
@@ -31,6 +31,8 @@ export default function FormWidget(){
         <button className="rounded-md p-2 bg-lime-800 mx-4" onClick={handleLoadFromLocalStorage}>Laden</button>
         
         <ReferenceEditForm/>
+        <DateEditForm type="due"/>
+        <DateEditForm type="given"/>
         <InvoicePartyEditForm party="invoicee"/>
         <InvoicePartyEditForm party="sender"/>
         <h2>Posten</h2>
@@ -40,6 +42,32 @@ export default function FormWidget(){
     </div>;
 }
 
+type DateEditProps = Readonly<{type:'due'|'given'}>;
+function DateEditForm({type}:DateEditProps){
+    const dispatch = useContext(InvoiceDispatchContext);
+    const invoiceData = useContext(InvoiceStateContext);
+
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+        dispatch({
+            kind: type==='due'?'set_date_due': 'set_date_given',
+            date: new Date(e.target.value)
+        })
+    }
+
+    if (type==='due'){
+        return <form>
+        <FormLabel htmlFor="dateDue" text="Zahlungsdatum"/>
+        <input type="date" name="dateDue" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" defaultValue={invoiceData.dateDue.toLocaleDateString()} onChange={handleChange}></input>
+    </form>
+    } else {
+        return <form>
+        <FormLabel htmlFor="dateDue" text="Ausgabedatum"/>
+        <input type="date" name="dateDue" className="rounded-md border-solid border-2 border-slate-300 text-slate-700" defaultValue={invoiceData.dateGiven?.toLocaleDateString()} onChange={handleChange}></input>
+    </form>
+    }
+
+    
+}
 type PartyProps = Readonly<{party:'sender'|'invoicee'}>;
 function InvoicePartyEditForm({party}:PartyProps){
     const invoiceDispatch = useContext(InvoiceDispatchContext);

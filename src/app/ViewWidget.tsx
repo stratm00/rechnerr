@@ -6,7 +6,8 @@ import QRCode, { QRCodeSegment } from "qrcode"
 import getStructuredCreditorReference from "@/lib/scr";
 export default function ViewWidget(){
     return <>
-        <div id="addressCntnr" className="py-5 ">
+        <div id="addressCntnr" className="py-0 ">
+            <DateIssued/>
             <InvoiceAddressCard type={"invoicee"}/>
             <InvoiceAddressCard type={"sender"}/>
         </div>
@@ -17,12 +18,9 @@ export default function ViewWidget(){
         </>;
 
 }
-
-
-function InvoiceTitleStatement(){
+function DateIssued(){
     const invoiceData = useContext(InvoiceStateContext);
-    
-    return <h1>Rechnung für {invoiceData.invoicee.name} an {invoiceData.sender.name}</h1>
+    return <>{invoiceData.dateGiven!==undefined && <h3>{invoiceData.dateGiven.toLocaleDateString()}</h3>}</>;
 }
 type InvoiceAddressCardProps = {readonly type: "invoicee"|"sender"};
 function InvoiceAddressCard({type}:InvoiceAddressCardProps) {
@@ -34,6 +32,12 @@ function InvoiceAddressCard({type}:InvoiceAddressCardProps) {
         {addressObj.address!==undefined && <p>{addressObj.address.zipcode}</p>}
     </div>;
     
+}
+
+function InvoiceTitleStatement(){
+    const invoiceData = useContext(InvoiceStateContext);
+    
+    return <h1>Rechnung für {invoiceData.invoicee.name} an {invoiceData.sender.name}</h1>
 }
 
 function InvoiceItemTable(){
@@ -93,7 +97,7 @@ function InvoicePaymentDetails(){
         const paymentData = paymentNumbers(invoiceData)
         const paymentSum = (paymentData.subtotal+paymentData.taxes-paymentData.discount).toFixed(2)
         const purpose = "RNRR"
-        // const epcDataString = `BCD0021SCT${invoiceData.sender.name}${invoiceData.sender.iban}${paymentSum}${purpose}${paymentSCR}`
+        
         const segments = [
             //ID: BCD
             'BCD\n', 
@@ -109,7 +113,7 @@ function InvoicePaymentDetails(){
             invoiceData.sender.name.slice(0,70)+"\n",
             //IBAN of Beneficiary
             invoiceData.sender.iban+"\n",
-            //AMT IN EURO
+            //AMOUNT IN EURO
             `EUR${paymentSum}\n`,
             //PURPOSE            
             purpose+'\n'+'\n',
@@ -131,6 +135,7 @@ function InvoicePaymentDetails(){
         return () => {}
     }, [invoiceData])
     return <>
+        <p>Bitte zahlen Sie die angegebene Summe zeitlich, sodass sie sich am {invoiceData.dateDue.toLocaleDateString()} beim Empfänger befindet.</p>
         <h2>an IBAN: {invoiceData.sender.iban}</h2>
         <h2>Referenz: {scr}</h2>
         <h3> Oder scannen Sie den folgenden QR-Code:</h3>

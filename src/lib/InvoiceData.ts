@@ -20,8 +20,8 @@ export type InvoiceData = {
     invoicee: PaymentAddress,
     sender: PaymentAddress,
     items:Item[],
-    dateGiven?: string,
-    dateDue: string,
+    dateGiven?: Date,
+    dateDue: Date,
     // structuredCreditorRef?: string,
     discountGiven?:number,
     paymentRef:string
@@ -61,14 +61,15 @@ export const DEFAULT_INITIAL_INVOICE_STATE:InvoiceData = {
         }
     ],
     discountGiven: 100,
-    dateDue: "",
+    dateDue: new Date(0),
+    dateGiven: new Date(0),
     paymentRef: "REF"
 } 
 
 export type InvoiceDataSignal = {
     kind: 'set_invoicee' | 'set_sender' | 'set_items' | 'set_date_given' | 'set_date_due' | 'set_scr' | 'set_discount' | 'switch_parties' | 'set_payment_reference' | 'set_state',
     paymentAddress?:PaymentAddress
-    date?:string,
+    date?:Date,
     scr?:string,
     discount?:number,
     items?:Item[],

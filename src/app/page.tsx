@@ -22,7 +22,7 @@ export default function Home() {
           <FormWidget/>
         </InvoiceDispatchContext.Provider>
       </div>
-      <article id="invoice" className="py-20 max-w-7xl mx-auto text-md">
+      <article id="invoice" className="py-20 max-w-7xl mx-auto text-sm">
         <ViewWidget/>
       </article>
       </InvoiceStateContext.Provider>

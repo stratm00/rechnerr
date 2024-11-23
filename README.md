@@ -10,7 +10,6 @@ Abhängigkeiten:
 
 TODO:
 
-
 Getan: 
 - [x] Setup
 - [x] Generator für Structured Creditor Reference 
@@ -24,6 +23,7 @@ Getan:
 - [x] Styling Rework: Skonto und Refnummer-Eingabe visuell sinnig gestalten
 - [x] Dockerfile
 - [x] Rework des EPC-Generatoren
+- [x] Datumsangaben
 
 Maybes:
 - [ ] Crypto-Zahlungsmöglichkeiten (Preis in $BTC umwandeln, BIP21 QR bilden (https://bitcoinqr.dev/))
